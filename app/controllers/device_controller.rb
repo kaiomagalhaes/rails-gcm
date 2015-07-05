@@ -1,3 +1,5 @@
+require 'net/http'
+require "uri"
 class DeviceController < ApplicationController
   skip_before_filter :verify_authenticity_token
   def register
@@ -14,7 +16,19 @@ class DeviceController < ApplicationController
   end
 
   def send_message
-    puts "send ------ message"
+    title= params[:title]
+    body = params[:body]
+    reg_id= params[:reg_id]
+    url = "https://android.googleapis.com/gcm/send"
+    send_params = {
+      "data":{
+        "title": title,
+        "body": body
+      },
+      registration_ids:[reg_id]
+    }
+    parsed_url = URI.parse(url)
+    result = Net::HTTP.post_form(parsed_url, send_params)
 
     render json:{status:200}
   end
