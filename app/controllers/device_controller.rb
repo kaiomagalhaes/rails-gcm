@@ -29,7 +29,7 @@ class DeviceController < ApplicationController
     }
     parsed_url = URI.parse(url)
     result = Net::HTTP.post_form(parsed_url, send_params)
-
+puts result
     render json:{status:200}
   end
 
