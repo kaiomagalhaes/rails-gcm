@@ -1,6 +1,7 @@
 class DeviceController < ApplicationController
   skip_before_filter :verify_authenticity_token
   def register
+    puts params
     device_id = params[:reg_id]
     puts "Id: #{device_id}"
     if Device.where(reg_id: device_id).count == 0
